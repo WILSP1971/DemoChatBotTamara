@@ -137,6 +137,28 @@ def enviar_mensaje_whatapps(texto,number):
             }
         }
 
+    #### Conexion Render/META
+    ## Convertir a el diccionario en formato json
+    data = json.dumps(data)        
+
+    ## Conexion META
+    headers = {
+        "Content-Type" : "application/json",
+        "Authorization" : "Bearer EAAFojfaX74gBOxAqt6kmaxDnsJGRXPKyX9ZCJOuJWhc54Q1Bml8N108io5n3j0JNvZAoPI49nZAOWaqsKs7eyOJpxDn4LfB50V8TY5PUZCBAWoCJCnEzDMwEkkyCRhRsqZCsOrP1mDTgVMWTuF2Enx0EYsjxXYHqve0Dz799osyNsdr0B9bvaZBINtEbzuQBK6sxEHEwdF3hzNELDWVRGXUiQZD"
+    }
+    connection = http.client.HTTPSConnection("graph.facebook.com")
+
+    try:
+        connection.request("POST","/v21.0//489807960875135/messages", data, headers)
+        response = connection.getresponse()
+        print(response.status, response.reason)
+    except Exception as e:
+        agregar_mensajes_log(json.dumps(e))
+    finally:
+        connection.close()
+
+
+
 ## Ejecucion en Entorno Virtual
 if __name__ == '__main__':
     app.run(debug=True)
