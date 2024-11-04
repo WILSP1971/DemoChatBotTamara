@@ -130,31 +130,27 @@ def enviar_mensaje_whatapps(texto,number):
        data =  {
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
-            "to": number,
-            "type": "interactive",
-            "interactive":{
-                "type" : "list",
-                "body": {
-                    "text": ""
-                },
-                "action":{
-                    "sections":[
-                        {
-                            "header": "No de Identificacion del Paciente",
-                            "widgets": [
-                                {
-                                "textInput": {
-                                    "label": "Ingrese No Identificacion",
-                                    "type": "SINGLE_LINE",
-                                    "name": "nocedula"
-                                  }
-                                } 
-                            ]
+            "to": number,            
+            "sections": [
+                {
+                "header": "No Identificacion Paciente",
+                "collapsible": true,
+                "uncollapsibleWidgetsCount": 1,
+                "widgets": [
+                    {
+                        "textInput": {
+                        "name": "validate_integer",
+                        "label": "Ingrese un No de Identificacion",
+                        "type": "SINGLE_LINE",
+                        "validation": {
+                        "input_type": "INTEGER"
+                         }
                         }
-                    ]
-                }
-            }   
-         }
+                    } 
+                ]      
+              }
+            ]
+        }
     else:
         data={
             "messaging_product": "whatsapp",
@@ -188,6 +184,9 @@ def enviar_mensaje_whatapps(texto,number):
     finally:
         connection.close()
 
+## Funcion Verifica Cedula en BD
+
+## Conexion a Web API
 
 
 ## Ejecucion en Entorno Virtual
