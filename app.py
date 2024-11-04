@@ -131,25 +131,11 @@ def enviar_mensaje_whatapps(texto,number):
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
             "to": number,            
-            "sections": [
-                {
-                "header": "No Identificacion Paciente",
-                "collapsible": true,
-                "uncollapsibleWidgetsCount": 1,
-                "widgets": [
-                    {
-                        "textInput": {
-                        "name": "validate_integer",
-                        "label": "Ingrese un No de Identificacion",
-                        "type": "SINGLE_LINE",
-                        "validation": {
-                        "input_type": "INTEGER"
-                         }
-                        }
-                    } 
-                ]      
-              }
-            ]
+            "type": "text",
+            "text": {
+                "id": "CC",
+                "body": "🚀 Ingrese No de Cedula/Identificacion del Paciente"
+            }       
         }
     else:
         data={
