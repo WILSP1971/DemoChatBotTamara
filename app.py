@@ -100,8 +100,8 @@ def recibir_mensajes(req):
 
 
                 if "text" in messages:
-                    text = messages["text"]["body"]
-                    numero = messages["from"]
+                    text = messages["text"]["body"] ## Cuerpo del Mensaje
+                    numero = messages["from"] ## No Telefono
                     enviar_mensaje_whatapps(text,numero)
 
                     #Guardar Log en la BD
@@ -114,7 +114,7 @@ def recibir_mensajes(req):
 ## Envio de Mensajes Respuesta a Whatapps
 def enviar_mensaje_whatapps(texto,number):
     texto = texto.lower()
-    if "hola" in texto:
+    if ("hola" in texto) or ("buenos dias" in texto) or ("buenas tardes" in texto):   ##"hola" in texto:
         data={
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
@@ -122,7 +122,7 @@ def enviar_mensaje_whatapps(texto,number):
             "type": "text",
             "text": {
                 "preview_url": False,
-                "body": "🚀 Hola, ¿Cómo estás? Bienvenido."
+                "body": "🚀 Hola Bienvenido!!, Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. Información de Citas. ❔\n2️⃣. Ubicación Sedes. 📍\n3️⃣. Horario de Atención. 📄\n4️⃣. Regresar al Menú. 🕜"
             }
         }
     else:
@@ -133,7 +133,8 @@ def enviar_mensaje_whatapps(texto,number):
             "type": "text",
             "text": {
                 "preview_url": False,
-                "body": "🚀 Hola, visita mi web twsbarranquilla.com para más información.\n \n📌Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. Información del Curso. ❔\n2️⃣. Ubicación del local. 📍\n3️⃣. Enviar temario en PDF. 📄\n4️⃣. Audio explicando curso. 🎧\n5️⃣. Video de Introducción. ⏯️\n6️⃣. Hablar con AnderCode. 🙋‍♂️\n7️⃣. Horario de Atención. 🕜 \n0️⃣. Regresar al Menú. 🕜"
+                "body": "🚀 Hola, visita mi web https://tamaraimagenes.com para más información.\n \n📌Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. Información de Citas. ❔\n2️⃣. Ubicación Sedes. 📍\n3️⃣. Horario de Atención. 📄\n4️⃣. Regresar al Menú. 🕜"
+##                "body": "🚀 Hola, visita mi web https://tamaraimagenes.com para más información.\n \n📌Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. Información de Citas. ❔\n2️⃣. Ubicación Sedes. 📍\n3️⃣. Enviar temario en PDF. 📄\n4️⃣. Audio explicando curso. 🎧\n5️⃣. Video de Introducción. ⏯️\n6️⃣. Hablar con AnderCode. 🙋‍♂️\n7️⃣. Horario de Atención. 🕜 \n0️⃣. Regresar al Menú. 🕜"
             }
         }
 
