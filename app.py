@@ -3,6 +3,7 @@ import json
 import http.client
 from flask import Flask,render_template,request,jsonify
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import true
 
 app = Flask(__name__)
 
@@ -125,6 +126,28 @@ def enviar_mensaje_whatapps(texto,number):
                 "body": "🚀 Hola Bienvenido!!, Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. Información de Citas. ❔\n2️⃣. Ubicación Sedes. 📍\n3️⃣. Horario de Atención. 📄\n4️⃣. Regresar al Menú. 🕜"
             }
         }
+    elif "1" in texto:
+       data =  {
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": number,
+            "type": "text",
+            "sections": [
+                {
+                "header": "No de Identificacion del Paciente",
+                "widgets": [
+                    {
+                    "textInput": {
+                        "label": "Ingrese No Identificacion",
+                        "type": "SINGLE_LINE",
+                        "name": "nocedula"
+                    }
+                    }               
+                 ]
+                }
+            ]
+        }
+
     else:
         data={
             "messaging_product": "whatsapp",
