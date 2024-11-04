@@ -115,7 +115,7 @@ def recibir_mensajes(req):
 ## Envio de Mensajes Respuesta a Whatapps
 def enviar_mensaje_whatapps(texto,number):
     texto = texto.lower()
-    if ("hola" in texto) or ("buenos dias" in texto) or ("buenas tardes" in texto):   ##"hola" in texto:
+    if ("hola" in texto) or ("buenos dias" in texto) or ("buenas tardes" in texto):   
         data={
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
@@ -147,7 +147,6 @@ def enviar_mensaje_whatapps(texto,number):
                 }
             ]
         }
-
     else:
         data={
             "messaging_product": "whatsapp",
@@ -157,9 +156,9 @@ def enviar_mensaje_whatapps(texto,number):
             "text": {
                 "preview_url": False,
                 "body": "🚀 Hola, visita mi web https://tamaraimagenes.com para más información.\n \n📌Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. Información de Citas. ❔\n2️⃣. Ubicación Sedes. 📍\n3️⃣. Horario de Atención. 📄\n4️⃣. Regresar al Menú. 🕜"
-##                "body": "🚀 Hola, visita mi web https://tamaraimagenes.com para más información.\n \n📌Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. Información de Citas. ❔\n2️⃣. Ubicación Sedes. 📍\n3️⃣. Enviar temario en PDF. 📄\n4️⃣. Audio explicando curso. 🎧\n5️⃣. Video de Introducción. ⏯️\n6️⃣. Hablar con AnderCode. 🙋‍♂️\n7️⃣. Horario de Atención. 🕜 \n0️⃣. Regresar al Menú. 🕜"
             }
         }
+    ## "body": "🚀 Hola, visita mi web https://tamaraimagenes.com para más información.\n \n📌Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. Información de Citas. ❔\n2️⃣. Ubicación Sedes. 📍\n3️⃣. Enviar temario en PDF. 📄\n4️⃣. Audio explicando curso. 🎧\n5️⃣. Video de Introducción. ⏯️\n6️⃣. Hablar con AnderCode. 🙋‍♂️\n7️⃣. Horario de Atención. 🕜 \n0️⃣. Regresar al Menú. 🕜"
 
     #### Conexion Render/META
     ## Convertir a el diccionario en formato json
