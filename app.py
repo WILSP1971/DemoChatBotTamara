@@ -131,22 +131,30 @@ def enviar_mensaje_whatapps(texto,number):
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
             "to": number,
-            "type": "text",
-            "sections": [
-                {
-                "header": "No de Identificacion del Paciente",
-                "widgets": [
-                    {
-                    "textInput": {
-                        "label": "Ingrese No Identificacion",
-                        "type": "SINGLE_LINE",
-                        "name": "nocedula"
-                    }
-                    }               
-                 ]
+            "type": "interactive",
+            "interactive":{
+                "type" : "list",
+                "body": {
+                    "text": ""
+                },
+                "action":{
+                    "sections":[
+                        {
+                            "header": "No de Identificacion del Paciente",
+                            "widgets": [
+                                {
+                                "textInput": {
+                                    "label": "Ingrese No Identificacion",
+                                    "type": "SINGLE_LINE",
+                                    "name": "nocedula"
+                                  }
+                                } 
+                            ]
+                        }
+                    ]
                 }
-            ]
-        }
+            }   
+         }
     else:
         data={
             "messaging_product": "whatsapp",
