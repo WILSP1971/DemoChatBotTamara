@@ -210,11 +210,12 @@ def enviar_datos(datos,number):
 def traer_datoscedula(nocedula):
     url_base = "https://api.tvmaze.com/search/shows"
     param = {"q":"mcgyver"}
-    api_url = "https://appsintranet.grupocampbell.com/ApiCampbell/Pacientes"
-    args = {"CodigoEmp": "C30", "criterio": "'"+nocedula+"'","ipServidor": "192.168.2.235","bdDatos": "bd","dbPort": 3396,"bdUser": "jgarcia","bdPass": "lili2004"}
-    #response = requests.post(url_base, json=param)
-    response = requests.get(url_base, json=param)
-    datospac = response.json()
+    api_url = "https://appsintranet.grupocampbell.com/ApiCampbell/api/Pacientes"
+    args = {"CodigoEmp": "C30", "criterio": nocedula}
+    #args = {"CodigoEmp": "C30", "criterio": "'"+nocedula+"'","ipServidor": "192.168.2.235","bdDatos": "bd","dbPort": 3396,"bdUser": "jgarcia","bdPass": "lili2004"}
+    #responpost = requests.post(url_base, json=param)
+    responget = requests.get(url_base, json=param)
+    datospac = responget.json()
     
     enviar_datos(datospac,notelefono)
     #conectar_mysql(nocedula)
@@ -231,7 +232,7 @@ def Connect_META(data):
     connection = http.client.HTTPSConnection("graph.facebook.com")
 
     try:
-        connection.request("POST","/v21.0/489807960875135/messages", data, headers)
+        connection.request("GET","/v21.0/489807960875135/messages", data, headers)
         response = connection.getresponse()
         print(response.status, response.reason)
     except Exception as e:
