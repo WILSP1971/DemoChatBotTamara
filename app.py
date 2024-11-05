@@ -166,21 +166,8 @@ def enviar_mensaje_whatapps(texto,number):
     #### Conexion Render/META
     ## Convertir a el diccionario en formato json
     data = json.dumps(data)        
+    Connect_META(data)
 
-    ## Conexion META
-    headers = {
-        "Content-Type" : "application/json",
-        "Authorization" : "Bearer EAAFojfaX74gBO5L7MqhiVRv4MLleZBRIeSBYmZCisn4D8PGvH008N88Lio5jQiUEKJJQpFpxkV6GtZA4FVK08nm3ZAITNe3ZAd9MTXmBGcJa3Y1fDoe11MjnKMLwCPYlFmCdOP7JIRDwEdvPtf20eKlHBjCZBDu7DKZBDvHNwtTB8HrNukoh1PcgZAeV2ftlRC3M6EyoNxcAueTj3PAqZCh8Gpn0s"
-    }
-    connection = http.client.HTTPSConnection("graph.facebook.com")
-
-    try:
-        connection.request("POST","/v21.0/489807960875135/messages", data, headers)
-        response = connection.getresponse()
-        print(response.status, response.reason)
-    except Exception as e:
-        agregar_mensajes_log(json.dumps(e))
-    finally:
         connection.close()
 
 ## Envio de datos Cedula
@@ -195,7 +182,10 @@ def enviar_datos(datos,number):
                 "body": datos
             }
         }
-
+        #### Conexion Render/META
+        ## Convertir a el diccionario en formato json
+        data = json.dumps(data)        
+        Connect_META(data)
 
 ## Funcion Verifica Cedula en BD
 def traer_datoscedula(nocedula):
@@ -206,6 +196,24 @@ def traer_datoscedula(nocedula):
     enviar_datos(datospac,notelefono)
     #conectar_mysql(nocedula)
     #validar_cedula(nocedula)
+
+#### Conexion Render/META
+## Convertir a el diccionario en formato json
+def Connect_META(data):
+    ## Conexion META
+    headers = {
+        "Content-Type" : "application/json",
+        "Authorization" : "Bearer EAAFojfaX74gBO3GUfCLqPdriXp6niZBOQpnwSL2NxZAJcfSpOPSHDwKbXxIKNe9vOKOg5eyf9xgWwXKe8a5sn264dEp1702ZCnMZAhnqSE8DN58P0Ya92v6qYli5uZCQYe4xbWObtGa21dhUvd2T6YMGaX1WduZBs11XzcyZCEURMwsjvhoK9ZCUKpsZBL3SSlVo2AbkcLdrwpEmrkp9kHFhZArS4ZD"
+    }
+    connection = http.client.HTTPSConnection("graph.facebook.com")
+
+    try:
+        connection.request("POST","/v21.0/489807960875135/messages", data, headers)
+        response = connection.getresponse()
+        print(response.status, response.reason)
+    except Exception as e:
+        agregar_mensajes_log(json.dumps(e))
+    finally:
 
 ## Conexion a Web API
 ##def conectar_mysql(nocedula):
