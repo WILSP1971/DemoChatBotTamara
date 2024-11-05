@@ -227,12 +227,12 @@ def Connect_META(data):
     ## Conexion META
     headers = {
         "Content-Type" : "application/json",
-        "Authorization" : "Bearer EAAFojfaX74gBOy3nGh1kJZCvLQb03cySSSviSdVeZAQSisAgHhena8n49wN9WP6prdgueKqQ61WTLHWHfsU1ZBD5qNMzGAPBqOJUwuYOK9wfbyUBT4ZBwvuJ48lsV7J1dP5aIo9NQZAHBAbZC7h89sjUxAXLbYydqnlJdS4quFYxZCtHMrtZB8QHwSlUWMXQyJq9dPcyDcWO6Lhf1em6TZCGOidAZD"
+        "Authorization" : "Bearer EAAFojfaX74gBO30GGYVKJZApGGPMzogqZC4PPZBVlieBCMjjFBIfscrKC2DbC8DhbX8FYlRW7MxcroohrnDHRgnHxqoClDKqZBAKZASrZCHhVQZConWJGh42kjo6ZCv4EwifUTQ6m1Y5m0BHyUHKZB7bZBVU5OH0udYvGbjRi4IoScjrbZBtXaczbkh9P7Q66q685eLE79JRYXg1nut0IqI0me0r3EZD"
     }
     connection = http.client.HTTPSConnection("graph.facebook.com")
 
     try:
-        connection.request("GET","/v21.0/489807960875135/messages", data, headers)
+        connection.request("POST","/v21.0/489807960875135/messages", data, headers)
         response = connection.getresponse()
         print(response.status, response.reason)
     except Exception as e:
