@@ -108,10 +108,10 @@ def recibir_mensajes(req):
                     text = messages["text"]["body"] ## Cuerpo del Mensaje
                     notelefono = messages["from"] ## No Telefono
                     
-                    LenCedula = str(text)
-                    IsCedula = text.isdigit()
+                    LenCedula = len(text)
+                    IsNumeroCedula = text.isdigit()
 
-                    if IsCedula:
+                    if IsNumeroCedula:
                         if LenCedula>=7:
                             traer_datoscedula(text)
                         else:
@@ -145,11 +145,12 @@ def enviar_mensaje_whatapps(texto,number):
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
             "to": number,            
-             "type": "text",
+            "type": "text",
             "text": {
                 "preview_url": False,
                 "body": "🚀Por favor, ingresa un número de Identificacion/Cedula"
-            }        }
+            }        
+        }
     else:
         data={
             "messaging_product": "whatsapp",
