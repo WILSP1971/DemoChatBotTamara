@@ -161,14 +161,10 @@ def enviar_mensaje_whatapps(texto,number):
                 "body": "🚀 Hola, visita mi web https://tamaraimagenes.com para más información.\n \n📌Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. Información de Citas. ❔\n2️⃣. Ubicación Sedes. 📍\n3️⃣. Horario de Atención. 📄\n4️⃣. Regresar al Menú. 🕜"
             }
         }
-    ## "body": "🚀 Hola, visita mi web https://tamaraimagenes.com para más información.\n \n📌Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. Información de Citas. ❔\n2️⃣. Ubicación Sedes. 📍\n3️⃣. Enviar temario en PDF. 📄\n4️⃣. Audio explicando curso. 🎧\n5️⃣. Video de Introducción. ⏯️\n6️⃣. Hablar con AnderCode. 🙋‍♂️\n7️⃣. Horario de Atención. 🕜 \n0️⃣. Regresar al Menú. 🕜"
-
-    #### Conexion Render/META
     ## Convertir a el diccionario en formato json
     data = json.dumps(data)        
     Connect_META(data)
-
-        connection.close()
+    ## "body": "🚀 Hola, visita mi web https://tamaraimagenes.com para más información.\n \n📌Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. Información de Citas. ❔\n2️⃣. Ubicación Sedes. 📍\n3️⃣. Enviar temario en PDF. 📄\n4️⃣. Audio explicando curso. 🎧\n5️⃣. Video de Introducción. ⏯️\n6️⃣. Hablar con AnderCode. 🙋‍♂️\n7️⃣. Horario de Atención. 🕜 \n0️⃣. Regresar al Menú. 🕜"
 
 ## Envio de datos Cedula
 def enviar_datos(datos,number):
@@ -182,7 +178,6 @@ def enviar_datos(datos,number):
                 "body": datos
             }
         }
-        #### Conexion Render/META
         ## Convertir a el diccionario en formato json
         data = json.dumps(data)        
         Connect_META(data)
@@ -214,6 +209,7 @@ def Connect_META(data):
     except Exception as e:
         agregar_mensajes_log(json.dumps(e))
     finally:
+        connection.close()
 
 ## Conexion a Web API
 ##def conectar_mysql(nocedula):
