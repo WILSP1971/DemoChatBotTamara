@@ -5,7 +5,7 @@ from flask import Flask,render_template,request,jsonify
 from flask_sqlalchemy import SQLAlchemy
 import requests
 from sqlalchemy import true
-import mysql.connector
+#import mysql.connector
 
 datospac = ""
 notelefono = ""
