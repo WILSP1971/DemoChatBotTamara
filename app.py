@@ -131,43 +131,11 @@ def enviar_mensaje_whatapps(texto,number):
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
             "to": number,            
-            "type": "interactive",
-            "interactive":{
-                "type" : "list",
-                "body": {
-                    "text": "Selecciona Alguna Opción"
-                },
-                "footer": {
-                    "text": ""
-                },
-                "action":{
-                    "sections":[
-                        {
-                            "header": "Section Header",
-                            "collapsible": true,
-                            "uncollapsibleWidgetsCount": 1,
-                            "widgets": [
-                                {
-                                "textInput": {
-                                    "name": "email_address",
-                                    "label": "Email Address",
-                                    "validation": {
-                                    "inputType": "EMAIL"
-                                    },
-                                    "onChangeAction": {
-                                    "function": "onChangeTextInput",
-                                    "requiredWidgets": [
-                                        "email_address"
-                                    ]
-                                    }
-                                }
-                                }
-                            ]
-                        }
-                    ]
-                }
-            }
-        }
+             "type": "text",
+            "text": {
+                "preview_url": False,
+                "body": "🚀Por favor, ingresa un número de Identificacion/Cedula"
+            }        }
     else:
         data={
             "messaging_product": "whatsapp",
@@ -188,7 +156,7 @@ def enviar_mensaje_whatapps(texto,number):
     ## Conexion META
     headers = {
         "Content-Type" : "application/json",
-        "Authorization" : "Bearer EAAFojfaX74gBOzXol3bcJnZB9ZCzQh1iZA14Si3WGAPLZBZAZBymWWMLAc6F1mWx8HGEensFZBs7ieYM5ea9mlSdHLZCsJKMTUBiTX9lGDr0ZB9wL9GwuZCzAyvwVmaDcS3kxvIPGg4kzt5gnaOxyY6Vj9ZCxDhDvETlNdaoHnBCPnjuArjkR0B8ULYsK9mAzUxe34d49YNUKpfzCH3b9ZBB6ZC19tJEZD"
+        "Authorization" : "Bearer EAAFojfaX74gBO5L7MqhiVRv4MLleZBRIeSBYmZCisn4D8PGvH008N88Lio5jQiUEKJJQpFpxkV6GtZA4FVK08nm3ZAITNe3ZAd9MTXmBGcJa3Y1fDoe11MjnKMLwCPYlFmCdOP7JIRDwEdvPtf20eKlHBjCZBDu7DKZBDvHNwtTB8HrNukoh1PcgZAeV2ftlRC3M6EyoNxcAueTj3PAqZCh8Gpn0s"
     }
     connection = http.client.HTTPSConnection("graph.facebook.com")
 
