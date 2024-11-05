@@ -208,10 +208,13 @@ def enviar_datos(datos,number):
 
 ## Funcion Verifica Cedula en BD
 def traer_datoscedula(nocedula):
+    url_base = "https://api.tvmaze.com/search/shows"
+    param = {"q":"mcgyver"}
     api_url = "https://appsintranet.grupocampbell.com/ApiCampbell/Pacientes"
     args = {"CodigoEmp": "C30", "criterio": "'"+nocedula+"'","ipServidor": "192.168.2.235","bdDatos": "bd","dbPort": 3396,"bdUser": "jgarcia","bdPass": "lili2004"}
-    response = requests.post(api_url, json=args)
+    response = requests.post(url_base, json=param)
     datospac = response.json()
+    
     enviar_datos(datospac,notelefono)
     #conectar_mysql(nocedula)
     #validar_cedula(nocedula)
