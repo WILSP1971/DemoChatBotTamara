@@ -3,8 +3,12 @@ import json
 import http.client
 from flask import Flask,render_template,request,jsonify
 from flask_sqlalchemy import SQLAlchemy
+import requests
 from sqlalchemy import true
+import mysql.connector
 
+datospac = ""
+notelefono = ""
 app = Flask(__name__)
 
 ## Configuracion BD SQLLite
@@ -89,21 +93,31 @@ def recibir_mensajes(req):
 
                     if tipo_interactivo == "button_reply":
                         text = messages["interactive"]["button_reply"]["id"]
-                        numero = messages["from"]
+                        notelefono = messages["from"]
 
-                        enviar_mensaje_whatapps(text,numero)
+                        enviar_mensaje_whatapps(text,notelefono)
                     
                     elif tipo_interactivo == "list_reply":
                         text = messages["interactive"]["list_reply"]["id"]
-                        numero = messages["from"]
+                        notelefono = messages["from"]
 
-                        enviar_mensaje_whatapps(text,numero)
+                        enviar_mensaje_whatapps(text,notelefono)
 
 
                 if "text" in messages:
                     text = messages["text"]["body"] ## Cuerpo del Mensaje
-                    numero = messages["from"] ## No Telefono
-                    enviar_mensaje_whatapps(text,numero)
+                    notelefono = messages["from"] ## No Telefono
+                    
+                    LenCedula = str(text)
+                    IsCedula = text.isdigit()
+
+                    if IsCedula:
+                        if LenCedula>=7:
+                            traer_datoscedula(text)
+                        else:
+                            enviar_mensaje_whatapps(text,notelefono)
+                    else:
+                        enviar_mensaje_whatapps(text,notelefono)
 
                     #Guardar Log en la BD
                     agregar_mensajes_log(json.dumps(messages))
@@ -169,9 +183,45 @@ def enviar_mensaje_whatapps(texto,number):
     finally:
         connection.close()
 
+## Envio de datos Cedula
+def enviar_datos(datos,number):
+        data={
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": number,
+            "type": "text",
+            "text": {
+                "preview_url": False,
+                "body": datos
+            }
+        }
+
+
 ## Funcion Verifica Cedula en BD
+def traer_datoscedula(nocedula):
+    api_url = "https://appsintranet.grupocampbell.com/ApiCampbell/Pacientes"
+    args = {"CodigoEmp": "C30", "criterio": "'"+nocedula+"'","ipServidor": "192.168.2.235","bdDatos": "bd","dbPort": 3396,"bdUser": "jgarcia","bdPass": "lili2004"}
+    response = requests.post(api_url, json=args)
+    datospac = response.json()
+    enviar_datos(datospac,notelefono)
+    #conectar_mysql(nocedula)
+    #validar_cedula(nocedula)
 
 ## Conexion a Web API
+##def conectar_mysql(nocedula):
+    #response = requests.post(f"{BASE_URL}/products", json=new_product)   
+    # db = mysql.connector.connect(
+	# host='localhost',
+	# user=’username’,
+	# password=’password’
+    # )
+
+    # sql = "select name,car_number from drivers"
+    # cursor = db.cursor()
+    # cursor.execute(sql)
+
+    # results = cursor.fetchall()
+
 
 
 ## Ejecucion en Entorno Virtual
