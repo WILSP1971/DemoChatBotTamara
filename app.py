@@ -212,7 +212,8 @@ def traer_datoscedula(nocedula):
     param = {"q":"mcgyver"}
     api_url = "https://appsintranet.grupocampbell.com/ApiCampbell/Pacientes"
     args = {"CodigoEmp": "C30", "criterio": "'"+nocedula+"'","ipServidor": "192.168.2.235","bdDatos": "bd","dbPort": 3396,"bdUser": "jgarcia","bdPass": "lili2004"}
-    response = requests.post(url_base, json=param)
+    #response = requests.post(url_base, json=param)
+    response = requests.get(url_base, json=param)
     datospac = response.json()
     
     enviar_datos(datospac,notelefono)
