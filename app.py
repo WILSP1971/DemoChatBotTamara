@@ -140,7 +140,7 @@ def enviar_mensaje_whatapps(texto,number):
                 "body": "🚀 Hola Bienvenido!!, Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. Información de Citas. ❔\n2️⃣. Ubicación Sedes. 📍\n3️⃣. Horario de Atención. 📄\n4️⃣. Regresar al Menú. 🕜"
             }
         }
-    elif "1" in texto:
+    elif "1" == texto:
        data =  {
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
@@ -151,6 +151,29 @@ def enviar_mensaje_whatapps(texto,number):
                 "body": "🚀Por favor, ingresa un número de Identificacion/Cedula"
             }        
         }
+    elif "2" in texto:
+         data = {
+            "messaging_product": "whatsapp",
+            "to": number,
+            "type": "location",
+            "location": {
+                "latitude": "-11.005167253247674",
+                "longitude": "-74.8043525197199",
+                "name": "TAMARA Imagenes",
+                "address": "Alto Prado"
+            }
+        }       
+    elif "3" in texto:
+         data = {
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": number,
+            "type": "text",
+            "text": {
+                "preview_url": False,
+                "body": "📅 Horario de Atención : Lunes a Viernes. \n🕜 Horario : 8:00 am a 6:00 pm 🤓"
+            }
+        }       
     else:
         data={
             "messaging_product": "whatsapp",
