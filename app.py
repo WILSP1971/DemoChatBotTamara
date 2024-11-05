@@ -131,11 +131,42 @@ def enviar_mensaje_whatapps(texto,number):
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
             "to": number,            
-            "type": "text",
-            "text": {
-                "id": "CC",
-                "body": "🚀 Ingrese No de Cedula/Identificacion del Paciente"
-            }       
+            "type": "interactive",
+            "interactive":{
+                "type" : "list",
+                "body": {
+                    "text": "Selecciona Alguna Opción"
+                },
+                "footer": {
+                    "text": ""
+                },
+                "action":{
+                    "sections":[
+                        {
+                            "header": "Section Header",
+                            "collapsible": true,
+                            "uncollapsibleWidgetsCount": 1,
+                            "widgets": [
+                                {
+                                "textInput": {
+                                    "name": "email_address",
+                                    "label": "Email Address",
+                                    "validation": {
+                                    "inputType": "EMAIL"
+                                    },
+                                    "onChangeAction": {
+                                    "function": "onChangeTextInput",
+                                    "requiredWidgets": [
+                                        "email_address"
+                                    ]
+                                    }
+                                }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
         }
     else:
         data={
