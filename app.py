@@ -226,8 +226,6 @@ def Connect_META(data):
 
     # results = cursor.fetchall()
 
-
-
 ## Ejecucion en Entorno Virtual
 if __name__ == '__main__':
     app.run(debug=True)
