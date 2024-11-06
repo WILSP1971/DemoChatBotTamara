@@ -220,6 +220,7 @@ def traer_datoscedula(nocedula):
         #print(key, ":", value)
         if value == "1": 
            datospac = arraydata["Paciente"]
+           print("Datos a Enviar: ", datospac)
            break
     enviar_datos(datospac,notelefono)
     #conectar_mysql(nocedula)
@@ -242,6 +243,7 @@ def traer_datoscedula(nocedula):
 ## Convertir a el diccionario en formato json
 def Connect_META(data):
     ## Conexion META
+    print("Mensaje en META: ", data)
     headers = {
         "Content-Type" : "application/json",
         "Authorization" : "Bearer EAAFojfaX74gBO09w8oJl17DyZByEw49gVK4NhEnyqymZCDmEi8ZAFc0UWLp8xCP71b4PWaalmIe2a6ukoIyWAsNA9eCNH0QFfMyY8bSrODOMZAB5N3HrF7pdZAU6M3I1ejfMHVZCxHJ5eqFULkJC7yVzdAEZAuFuqfEp1UIeXZCZBAiXIQL50HpJYoOq32SbOUESZBPPDAiQJ4L8906iF4w1q0ZAmQZD"
