@@ -214,13 +214,25 @@ def traer_datoscedula(nocedula):
     responget = requests.get(api_url, params=params)
     arraydata = responget.json()
     for item in arraydata:
-        #print(item["$id"])
         numero = item["$id"]
         if numero == "1":
             datospac = item["Paciente"]
+            data={
+                "messaging_product": "whatsapp",
+                "recipient_type": "individual",
+                "to": notelefono,
+                "type": "text",
+                "text": {
+                    "preview_url": False,
+                    "body": "Pacientes es: " + datospac
+                }
+            }
+            ## Convertir a el diccionario en formato json
+            data = json.dumps(data)        
+            Connect_META(data)
         break
 
-    enviar_datos(datospac,notelefono)
+    #enviar_datos(datospac,notelefono)
 
 
 ## Funcion Extraer Data Response.json
