@@ -114,7 +114,7 @@ def recibir_mensajes(req):
 
                     if IsNumeroCedula:
                         if LenCedula>=7:
-                             traer_datoscedula(text)
+                             traer_datoscedula(text,notelefono)
                         else:
                             enviar_mensaje_whatapps(text,notelefono)
                     else:
@@ -208,7 +208,7 @@ def enviar_datos(datos,number):
         Connect_META(data)
 
 ## Funcion Verifica Cedula en BD
-def traer_datoscedula(nocedula):
+def traer_datoscedula(nocedula,number):
     api_url = "https://appsintranet.grupocampbell.com/ApiCampbell/api/Pacientes"
     params = {"CodigoEmp": "C30", "criterio": nocedula}
     responget = requests.get(api_url, params=params)
@@ -219,17 +219,49 @@ def traer_datoscedula(nocedula):
             datospac = item["Paciente"]
 
         #break
-
-    data={
-        "messaging_product": "whatsapp",
-        "recipient_type": "individual",
-        "to": "573005592856",
-        "type": "text",
-        "text": {
-            "preview_url": False,
-            "body": "Pacientes es: " + datospac
+    if datospac != "":
+        data = {
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": number,
+            "type": "interactive",
+            "interactive": {
+                "type": "button",
+                "body": {
+                    "text": "Pacientes es: " + datospac
+                },
+                "action": {
+                    "buttons": [
+                        {
+                            "type": "reply",
+                            "reply": {
+                                "id": "btnsi",
+                                "title": "SI"
+                            }
+                        },
+                        {
+                            "type": "reply",
+                            "reply": {
+                                "id": "btnno",
+                                "title": "NO"
+                            }
+                        }
+                    ]
+                }
+            }
         }
-    }
+    else:
+        data={
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": number,
+            "type": "text",
+            "text": {
+                "preview_url": False,
+                "body": "Pacientes No Registrado, Verifique el No de Identificacion..."
+            }
+        }
+
     ## Convertir a el diccionario en formato json
     data = json.dumps(data)        
     Connect_META(data)
