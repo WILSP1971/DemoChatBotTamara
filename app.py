@@ -7,8 +7,8 @@ import requests
 from sqlalchemy import JSON, true
 #import mysql.connector
 
-datospac = ""
 notelefono = ""
+datospac = ""
 app = Flask(__name__)
 
 ## Configuracion BD SQLLite
@@ -201,7 +201,7 @@ def enviar_datos(datos,number):
             "type": "text",
             "text": {
                 "preview_url": False,
-                "body": "VIENE DE TRAER "+datos
+                "body": "Pacientes es: " + datos
             }
         }
         ## Convertir a el diccionario en formato json
@@ -210,18 +210,16 @@ def enviar_datos(datos,number):
 
 ## Funcion Verifica Cedula en BD
 def traer_datoscedula(nocedula):
-    url_base = "https://api.tvmaze.com/search/shows"
-    param = {"q":"mcgyver"}
     api_url = "https://appsintranet.grupocampbell.com/ApiCampbell/api/Pacientes"
-    args = {"CodigoEmp": "C30", "criterio": nocedula}
-    #args = {"CodigoEmp": "C30", "criterio": "'"+nocedula+"'","ipServidor": "192.168.2.235","bdDatos": "bd","dbPort": 3396,"bdUser": "jgarcia","bdPass": "lili2004"}
-    #responpost = requests.post(url_base, json=param)
-    responget = requests.get(api_url, json=args)
+    params = {"CodigoEmp": "C30", "criterio": nocedula}
+    responget = requests.get(api_url, params=params)
     arraydata = responget.json()
-    for key, value in arraydata.items():
-        if value == "1": 
-           datospac = arraydata["Paciente"]
-           break
+    for item in arraydata:
+        #print(item["$id"])
+        numero = item["$id"]
+        if numero == "1":
+            datospac = item["Paciente"]
+        break
 
     enviar_datos(datospac,notelefono)
 
