@@ -79,7 +79,8 @@ def recibir_mensajes(req):
         changes = entry['changes'][0]
         value = changes['value']
         objeto_mensaje = value['messages']
-        
+        agregar_mensajes_log(json.dumps(objeto_mensaje[0]))
+
         if objeto_mensaje:
             messages = objeto_mensaje[0]
 
@@ -113,7 +114,7 @@ def recibir_mensajes(req):
 
                     if IsNumeroCedula:
                         if LenCedula>=7:
-                            traer_datoscedula(text)
+                             traer_datoscedula(text)
                         else:
                             enviar_mensaje_whatapps(text,notelefono)
                     else:
@@ -222,6 +223,7 @@ def traer_datoscedula(nocedula):
            datospac = arraydata["Paciente"]
            print("Datos a Enviar: ", datospac)
            break
+    agregar_mensajes_log(json.dumps(arraydata))
     enviar_datos(datospac,notelefono)
     #conectar_mysql(nocedula)
     #validar_cedula(nocedula)
