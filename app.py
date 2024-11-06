@@ -200,7 +200,7 @@ def enviar_datos(datos,number):
             "type": "text",
             "text": {
                 "preview_url": False,
-                "body": datos
+                "body": "VIENE DE TRAER"+datos
             }
         }
         ## Convertir a el diccionario en formato json
@@ -209,22 +209,23 @@ def enviar_datos(datos,number):
 
 ## Funcion Verifica Cedula en BD
 def traer_datoscedula(nocedula):
-    url_base = "https://api.tvmaze.com/search/shows"
-    param = {"q":"mcgyver"}
-    api_url = "https://appsintranet.grupocampbell.com/ApiCampbell/api/Pacientes"
-    args = {"CodigoEmp": "C30", "criterio": nocedula}
-    #args = {"CodigoEmp": "C30", "criterio": "'"+nocedula+"'","ipServidor": "192.168.2.235","bdDatos": "bd","dbPort": 3396,"bdUser": "jgarcia","bdPass": "lili2004"}
-    #responpost = requests.post(url_base, json=param)
-    responget = requests.get(api_url, json=args)
-    arraydata = responget.json()
-    for key, value in arraydata.items():
-        #print(key, ":", value)
-        if value == "1": 
-           datospac = arraydata["Paciente"]
-           print("Datos a Enviar: ", datospac)
-           break
-    agregar_mensajes_log(json.dumps(arraydata))
-    enviar_datos(datospac,notelefono)
+    enviar_datos("TRAER CEDULA",notelefono)
+    # url_base = "https://api.tvmaze.com/search/shows"
+    # param = {"q":"mcgyver"}
+    # api_url = "https://appsintranet.grupocampbell.com/ApiCampbell/api/Pacientes"
+    # args = {"CodigoEmp": "C30", "criterio": nocedula}
+    # #args = {"CodigoEmp": "C30", "criterio": "'"+nocedula+"'","ipServidor": "192.168.2.235","bdDatos": "bd","dbPort": 3396,"bdUser": "jgarcia","bdPass": "lili2004"}
+    # #responpost = requests.post(url_base, json=param)
+    # responget = requests.get(api_url, json=args)
+    # arraydata = responget.json()
+    # for key, value in arraydata.items():
+    #     #print(key, ":", value)
+    #     if value == "1": 
+    #        datospac = arraydata["Paciente"]
+    #        print("Datos a Enviar: ", datospac)
+    #        break
+
+    # enviar_datos(datospac,notelefono)
     #conectar_mysql(nocedula)
     #validar_cedula(nocedula)
 
