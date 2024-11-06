@@ -114,7 +114,8 @@ def recibir_mensajes(req):
 
                     if IsNumeroCedula:
                         if LenCedula>=7:
-                             traer_datoscedula(text)
+                             enviar_datos("ALGO",notelefono)
+                             #traer_datoscedula(text)
                         else:
                             enviar_mensaje_whatapps(text,notelefono)
                     else:
@@ -200,7 +201,7 @@ def enviar_datos(datos,number):
             "type": "text",
             "text": {
                 "preview_url": False,
-                "body": "VIENE DE TRAER"+datos
+                "body": "VIENE DE TRAER"
             }
         }
         ## Convertir a el diccionario en formato json
@@ -209,25 +210,21 @@ def enviar_datos(datos,number):
 
 ## Funcion Verifica Cedula en BD
 def traer_datoscedula(nocedula):
-    enviar_datos("TRAER CEDULA",notelefono)
-    # url_base = "https://api.tvmaze.com/search/shows"
-    # param = {"q":"mcgyver"}
-    # api_url = "https://appsintranet.grupocampbell.com/ApiCampbell/api/Pacientes"
-    # args = {"CodigoEmp": "C30", "criterio": nocedula}
-    # #args = {"CodigoEmp": "C30", "criterio": "'"+nocedula+"'","ipServidor": "192.168.2.235","bdDatos": "bd","dbPort": 3396,"bdUser": "jgarcia","bdPass": "lili2004"}
-    # #responpost = requests.post(url_base, json=param)
-    # responget = requests.get(api_url, json=args)
-    # arraydata = responget.json()
-    # for key, value in arraydata.items():
-    #     #print(key, ":", value)
-    #     if value == "1": 
-    #        datospac = arraydata["Paciente"]
-    #        print("Datos a Enviar: ", datospac)
-    #        break
+    url_base = "https://api.tvmaze.com/search/shows"
+    param = {"q":"mcgyver"}
+    api_url = "https://appsintranet.grupocampbell.com/ApiCampbell/api/Pacientes"
+    args = {"CodigoEmp": "C30", "criterio": nocedula}
+    #args = {"CodigoEmp": "C30", "criterio": "'"+nocedula+"'","ipServidor": "192.168.2.235","bdDatos": "bd","dbPort": 3396,"bdUser": "jgarcia","bdPass": "lili2004"}
+    #responpost = requests.post(url_base, json=param)
+    responget = requests.get(api_url, json=args)
+    arraydata = responget.json()
+    for key, value in arraydata.items():
+        if value == "1": 
+           datospac = arraydata["Paciente"]
+           break
 
-    # enviar_datos(datospac,notelefono)
-    #conectar_mysql(nocedula)
-    #validar_cedula(nocedula)
+    enviar_datos(datospac,notelefono)
+
 
 ## Funcion Extraer Data Response.json
 # def extract_key_value(json_data, key):
@@ -246,7 +243,6 @@ def traer_datoscedula(nocedula):
 ## Convertir a el diccionario en formato json
 def Connect_META(data):
     ## Conexion META
-    print("Mensaje en META: ", data)
     headers = {
         "Content-Type" : "application/json",
         "Authorization" : "Bearer EAAFojfaX74gBOwuQJbKefKYthc6xToVgiZAIjsd5ry2hBIOkH2y7wBIZCgzQxReECvL9B8yaJFzoq2iAbMtEVFjSAbbzJlZAvSbu9xOvwZCXTSPneJdZANd3wPwoNhfrZB3fwLPJXDob0Nj5fRbdqmQ239r5X4JiZAZAKCHcDD9njtElF3ji83cRVvGeyZBVeG5IUUgWAi9ryzkyOTVB5yYZCGZCLcZD"
