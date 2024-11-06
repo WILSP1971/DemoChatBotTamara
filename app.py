@@ -214,7 +214,7 @@ def traer_datoscedula(nocedula):
     args = {"CodigoEmp": "C30", "criterio": nocedula}
     #args = {"CodigoEmp": "C30", "criterio": "'"+nocedula+"'","ipServidor": "192.168.2.235","bdDatos": "bd","dbPort": 3396,"bdUser": "jgarcia","bdPass": "lili2004"}
     #responpost = requests.post(url_base, json=param)
-    responget = requests.get(url_base, json=param)
+    responget = requests.get(api_url, json=args)
     datospac = responget.json()
     
     enviar_datos(datospac,notelefono)
@@ -227,7 +227,7 @@ def Connect_META(data):
     ## Conexion META
     headers = {
         "Content-Type" : "application/json",
-        "Authorization" : "Bearer EAAFojfaX74gBO30GGYVKJZApGGPMzogqZC4PPZBVlieBCMjjFBIfscrKC2DbC8DhbX8FYlRW7MxcroohrnDHRgnHxqoClDKqZBAKZASrZCHhVQZConWJGh42kjo6ZCv4EwifUTQ6m1Y5m0BHyUHKZB7bZBVU5OH0udYvGbjRi4IoScjrbZBtXaczbkh9P7Q66q685eLE79JRYXg1nut0IqI0me0r3EZD"
+        "Authorization" : "Bearer EAAFojfaX74gBO22mKCDTCwkuYvZAJePS00F4lWb89oX8IZCeLIixgYP0yS2ncHyYl6mNZBF2dcWxgBVc7gguZAhkZCHQZAyztGVY1scyEZCEt5YF8A7gZAPKnDCWmBQrwvZCrkZBhERydNnSMATw709dST94pPUZAhe6gfgAzVBZB5wdhQ0lpBi4Yen7owJZBdo9tZBadZAnsCSMsJ3CDGnVsX1mjCjTJ7f"
     }
     connection = http.client.HTTPSConnection("graph.facebook.com")
 
