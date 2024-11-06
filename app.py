@@ -219,7 +219,7 @@ def traer_datoscedula(nocedula):
     for key, value in arraydata.items():
         #print(key, ":", value)
         if value == "1": 
-           datospac = value
+           datospac = arraydata["Paciente"]
            break
     enviar_datos(datospac,notelefono)
     #conectar_mysql(nocedula)
