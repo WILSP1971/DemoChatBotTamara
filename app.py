@@ -217,21 +217,22 @@ def traer_datoscedula(nocedula):
         numero = item["$id"]
         if numero == "1":
             datospac = item["Paciente"]
-            data={
-                "messaging_product": "whatsapp",
-                "recipient_type": "individual",
-                "to": notelefono,
-                "type": "text",
-                "text": {
-                    "preview_url": False,
-                    "body": "Pacientes es: " + datospac
-                }
-            }
-            ## Convertir a el diccionario en formato json
-            data = json.dumps(data)        
-            Connect_META(data)
-        break
 
+        #break
+
+    data={
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": notelefono,
+        "type": "text",
+        "text": {
+            "preview_url": False,
+            "body": "Pacientes es: " + datospac
+        }
+    }
+    ## Convertir a el diccionario en formato json
+    data = json.dumps(data)        
+    Connect_META(data)
     #enviar_datos(datospac,notelefono)
 
 
