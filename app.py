@@ -114,8 +114,7 @@ def recibir_mensajes(req):
 
                     if IsNumeroCedula:
                         if LenCedula>=7:
-                             enviar_datos("ALGO",notelefono)
-                             #traer_datoscedula(text)
+                             traer_datoscedula(text)
                         else:
                             enviar_mensaje_whatapps(text,notelefono)
                     else:
