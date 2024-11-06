@@ -7,7 +7,7 @@ import requests
 from sqlalchemy import true
 #import mysql.connector
 
-datospac = ""
+datospac = []
 notelefono = ""
 app = Flask(__name__)
 
@@ -217,7 +217,7 @@ def traer_datoscedula(nocedula):
     responget = requests.get(api_url, json=args)
     datospac = responget.json()
     
-    enviar_datos(datospac,notelefono)
+    enviar_datos(datospac[4],notelefono)
     #conectar_mysql(nocedula)
     #validar_cedula(nocedula)
 
