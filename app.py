@@ -1,13 +1,13 @@
-from datetime import datetime
+import datetime
 import json
 import http.client
 from flask import Flask,render_template,request,jsonify
 from flask_sqlalchemy import SQLAlchemy
 import requests
-from sqlalchemy import true
+from sqlalchemy import JSON, true
 #import mysql.connector
 
-datospac = []
+datospac = ""
 notelefono = ""
 app = Flask(__name__)
 
@@ -19,7 +19,7 @@ db = SQLAlchemy(app)
 ## Definicion de tablas con sus columnas
 class Log(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    fechahora = db.Column(db.DateTime, default=datetime.utcnow)
+    fechahora = db.Column(db.DateTime, default=datetime.datetime.today)
     mensajelog = db.Column(db.TEXT)
 
 ## Creacion tabla si no existe
@@ -215,11 +215,28 @@ def traer_datoscedula(nocedula):
     #args = {"CodigoEmp": "C30", "criterio": "'"+nocedula+"'","ipServidor": "192.168.2.235","bdDatos": "bd","dbPort": 3396,"bdUser": "jgarcia","bdPass": "lili2004"}
     #responpost = requests.post(url_base, json=param)
     responget = requests.get(api_url, json=args)
-    datospac = responget.json()
-    
-    enviar_datos(datospac[4],notelefono)
+    arraydata = responget.json()
+    for key, value in arraydata.items():
+        #print(key, ":", value)
+        if value == "1": 
+           datospac = value
+           break
+    enviar_datos(datospac,notelefono)
     #conectar_mysql(nocedula)
     #validar_cedula(nocedula)
+
+## Funcion Extraer Data Response.json
+# def extract_key_value(json_data, key):
+#     """Extracts a specific key-value pair from a JSON data"""
+#     data = json.loads(json_data)
+#     value = data.get(key)
+#     return value
+
+# def find_key(d,value): 
+#     for k, v in d.items(): 
+#        if v == value: 
+#             return k 
+#     return None 
 
 #### Conexion Render/META
 ## Convertir a el diccionario en formato json
