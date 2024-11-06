@@ -201,7 +201,7 @@ def enviar_datos(datos,number):
             "type": "text",
             "text": {
                 "preview_url": False,
-                "body": "VIENE DE TRAER"
+                "body": "VIENE DE TRAER "+datos
             }
         }
         ## Convertir a el diccionario en formato json
