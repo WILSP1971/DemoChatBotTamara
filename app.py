@@ -101,7 +101,7 @@ def recibir_mensajes(req):
                         notelefono = messages["from"]
 
                         if ("btn_cedsi" in text) or ("btn_cedno" in text) :
-                            mostrar_citas(noidentificacion,notelefono,nombre_paciente,text)
+                            mostrar_citas(noidentificacion,notelefono,text)
                         else:
                             enviar_mensaje_whatapps(text,notelefono)
                     
@@ -225,7 +225,6 @@ def traer_datoscedula(nocedula,number):
         numero = item["$id"]
         if numero == "1":
             datospac = item["Paciente"]
-            nombre_paciente = item["Paciente"]
         #break
     if datospac != "":
         data = {
@@ -275,7 +274,7 @@ def traer_datoscedula(nocedula,number):
     Connect_META(data)
 
 ## Funcion Paciente Confirmado Mostrar Citas
-def mostrar_citas(nocedula,number,nompaciente,tipo):
+def mostrar_citas(nocedula,number,tipo):
     if tipo == "btn_cedsi":
         api_url = "https://appsintranet.grupocampbell.com/ApiCampbell/api/CitasProgramadas"
         params = {"CodigoEmp": "C30", "criterio": nocedula}
@@ -299,6 +298,8 @@ def mostrar_citas(nocedula,number,nompaciente,tipo):
                     CodServicio="Consulta Externa"
                 else:
                     CodServicio = "Especialidad"
+
+                ##  variables de campos bd    
                 Fecha_Cita = item["Fecha"]
                 Hora_Cita = item["Hora"]
                 DeControl = item["citaControl"]
@@ -308,6 +309,8 @@ def mostrar_citas(nocedula,number,nompaciente,tipo):
                     Cita_Control == "Primera Vez"
                 Observacion_Cita = item["Observacion"]
                 Medico = item["Medico"]
+                nombre_paciente = item["Paciente"]
+                noidentificacion = item["NoIdentificacion"]
                 break
         if datoscitas != "":
             data={
