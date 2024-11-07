@@ -101,6 +101,7 @@ def recibir_mensajes(req):
                         notelefono = messages["from"]
 
                         if ("btn_cedsi" in text) or ("btn_cedno" in text) :
+                            noidentificacion = messages["interactive"]["button_reply"]["id"]["description"]
                             mostrar_citas(noidentificacion,notelefono,text)
                         else:
                             enviar_mensaje_whatapps(text,notelefono)
@@ -243,14 +244,16 @@ def traer_datoscedula(nocedula,number):
                             "type": "reply",
                             "reply": {
                                 "id": "btn_cedsi",
-                                "title": "SI"
+                                "title": "SI",
+                                "description": nocedula
                             }
                         },
                         {
                             "type": "reply",
                             "reply": {
                                 "id": "btn_cedno",
-                                "title": "NO"
+                                "title": "NO",
+                                "description": nocedula
                             }
                         }
                     ]
@@ -357,7 +360,7 @@ def Connect_META(data):
     ## Conexion META
     headers = {
         "Content-Type" : "application/json",
-        "Authorization" : "Bearer EAAFojfaX74gBO3ngZBu98j8ZAIq22xyQWhNiqXxbZB0IOVeZCjoArFtw5a8oB2OrpEuOjSgLIgb6w7hJiXAru8UsET8iTwY8LEBwfZAIvu9XvuOum9Lc4clw8AjXCorVDDAWIhRF4jJ7dNfgoN7spiooyH7fMAOfk899w70bhFj3GcJTTqiKFZCIoeqfCovFVr9ZCR3dUtuQGW04FwSZBv6mF8YZD"
+        "Authorization" : "Bearer EAAXAT9mWX40BO6nXKIUzoItu3hyfVzV6cRVSyGBJa0QKPZBoJOKAOVeDTNYX7RKkhGm2xe3wglRm0QIrgHVs9MyX6Jpbf4B6WXLVqJjvu3wAw7ZBUSZCOwpp8XHaSzhZB3ZBMWMq8QKiOWWHEHMFFSmBLOZCLVOoZC3NtXksgMiCxzFPERCpJfLjy1JIrAQYQwviZBD4cZCVOE6nXKZBgFzgjm1AIZD"
     }
     connection = http.client.HTTPSConnection("graph.facebook.com")
 
