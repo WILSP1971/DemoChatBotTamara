@@ -320,8 +320,9 @@ def mostrar_citas(nocedula,number,tipo):
                 "type": "text",
                 "text": {
                     "preview_url": False,
-                    "body": " 0️⃣. Cita en: " + CodServicio +"\n 1️⃣. Fecha: " + Fecha_Cita + "\n 2️⃣. Hora Cita: " + Hora_Cita + "\n 3️⃣. Tipo Cita: " + Cita_Control +"\n 4️⃣. Observacion: " + Observacion_Cita + " \n 5️⃣. Medico de Atencion: " + Medico + "" 
-                }
+                    "body": "Es correcto el json" 
+                    #"body": " 0️⃣. Cita en: " + CodServicio +"\n 1️⃣. Fecha: " + Fecha_Cita + "\n 2️⃣. Hora Cita: " + Hora_Cita + "\n 3️⃣. Tipo Cita: " + Cita_Control +"\n 4️⃣. Observacion: " + Observacion_Cita + " \n 5️⃣. Medico de Atencion: " + Medico + "" 
+               }
             }
         elif datoscitas == "":
             data={
