@@ -101,7 +101,7 @@ def recibir_mensajes(req):
                         notelefono = messages["from"]
 
                         if ("btn_cedsi" in text) or ("btn_cedno" in text) :
-                            noidentificacion = messages["interactive"]["button_reply"]["id"]["description"]
+                            #noidentificacion = messages["interactive"]["button_reply"]["id"]["description"]
                             mostrar_citas(noidentificacion,notelefono,text)
                         else:
                             enviar_mensaje_whatapps(text,notelefono)
@@ -245,7 +245,6 @@ def traer_datoscedula(nocedula,number):
                             "reply": {
                                 "id": "btn_cedsi",
                                 "title": "SI",
-                                "description": nocedula
                             }
                         },
                         {
@@ -253,7 +252,6 @@ def traer_datoscedula(nocedula,number):
                             "reply": {
                                 "id": "btn_cedno",
                                 "title": "NO",
-                                "description": nocedula
                             }
                         }
                     ]
