@@ -7,8 +7,12 @@ import requests
 from sqlalchemy import JSON, true
 #import mysql.connector
 
+## Definicion Variable Globales
 notelefono = ""
+noidentificacion = ""
+nombre_paciente = ""
 datospac = ""
+datoscitas = ""
 app = Flask(__name__)
 
 ## Configuracion BD SQLLite
@@ -96,7 +100,10 @@ def recibir_mensajes(req):
                         text = messages["interactive"]["button_reply"]["id"]
                         notelefono = messages["from"]
 
-                        enviar_mensaje_whatapps(text,notelefono)
+                        if ("btn_cedsi" in text) or ("btn_cedno" in text) :
+                            mostrar_citas(noidentificacion,notelefono,nombre_paciente,text)
+                        else:
+                            enviar_mensaje_whatapps(text,notelefono)
                     
                     elif tipo_interactivo == "list_reply":
                         text = messages["interactive"]["list_reply"]["id"]
@@ -114,7 +121,8 @@ def recibir_mensajes(req):
 
                     if IsNumeroCedula:
                         if LenCedula>=7:
-                             traer_datoscedula(text,notelefono)
+                            noidentificacion = text
+                            traer_datoscedula(text,notelefono)
                         else:
                             enviar_mensaje_whatapps(text,notelefono)
                     else:
@@ -217,7 +225,7 @@ def traer_datoscedula(nocedula,number):
         numero = item["$id"]
         if numero == "1":
             datospac = item["Paciente"]
-
+            nombre_paciente = item["Paciente"]
         #break
     if datospac != "":
         data = {
@@ -228,21 +236,21 @@ def traer_datoscedula(nocedula,number):
             "interactive": {
                 "type": "button",
                 "body": {
-                    "text": "Pacientes es: " + datospac
+                    "text": "Pacientes es: " + datospac + ", Favor Confirme (Si/No)"
                 },
                 "action": {
                     "buttons": [
                         {
                             "type": "reply",
                             "reply": {
-                                "id": "btnsi",
+                                "id": "btn_cedsi",
                                 "title": "SI"
                             }
                         },
                         {
                             "type": "reply",
                             "reply": {
-                                "id": "btnno",
+                                "id": "btn_cedno",
                                 "title": "NO"
                             }
                         }
@@ -250,7 +258,7 @@ def traer_datoscedula(nocedula,number):
                 }
             }
         }
-    else:
+    elif datospac == "":
         data={
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
@@ -265,21 +273,79 @@ def traer_datoscedula(nocedula,number):
     ## Convertir a el diccionario en formato json
     data = json.dumps(data)        
     Connect_META(data)
-    #enviar_datos(datospac,notelefono)
 
+## Funcion Paciente Confirmado Mostrar Citas
+def mostrar_citas(nocedula,number,nompaciente,tipo):
+    if tipo == "btn_cedsi":
+        api_url = "https://appsintranet.grupocampbell.com/ApiCampbell/api/CitasProgramadas"
+        params = {"CodigoEmp": "C30", "criterio": nocedula}
+        responget = requests.get(api_url, params=params)
+        arraydata = responget.json()
 
-## Funcion Extraer Data Response.json
-# def extract_key_value(json_data, key):
-#     """Extracts a specific key-value pair from a JSON data"""
-#     data = json.loads(json_data)
-#     value = data.get(key)
-#     return value
+        # Campos de Informacion en Citas Programadas
+        Fecha_Cita=""
+        Hora_Cita=""
+        CodServicio=""
+        DeControl = ""
+        Cita_Control=""
+        Observacion_Cita=""
+        Medico = ""
 
-# def find_key(d,value): 
-#     for k, v in d.items(): 
-#        if v == value: 
-#             return k 
-#     return None 
+        for item in arraydata:
+            numero = item["$id"]
+            if numero == "1":
+                datoscitas = item["CodServicio"]
+                if datoscitas == "CE":
+                    CodServicio="Consulta Externa"
+                else:
+                    CodServicio = "Especialidad"
+                Fecha_Cita = item["Fecha"]
+                Hora_Cita = item["Hora"]
+                DeControl = item["citaControl"]
+                if DeControl=="S":
+                    Cita_Control="Cita De Control"
+                else:
+                    Cita_Control == "Primera Vez"
+                Observacion_Cita = item["Observacion"]
+                Medico = item["Medico"]
+                break
+        if datoscitas != "":
+            data={
+                "messaging_product": "whatsapp",
+                "recipient_type": "individual",
+                "to": number,
+                "type": "text",
+                "text": {
+                    "preview_url": False,
+                    "body": " 0️⃣. Cita en: " + CodServicio +"\n 1️⃣. Fecha: " + Fecha_Cita + "\n 2️⃣. Hora Cita: " + Hora_Cita + "\n 3️⃣. Tipo Cita: " + Cita_Control +"\n 4️⃣. Observacion: " + Observacion_Cita + " \n 5️⃣. Medico de Atencion: " + Medico + "" 
+                }
+            }
+        elif datoscitas == "":
+            data={
+                "messaging_product": "whatsapp",
+                "recipient_type": "individual",
+                "to": number,
+                "type": "text",
+                "text": {
+                    "preview_url": False,
+                    "body": "Pacientes No Registra Citas Programadas... Favor Comunicarse al Call Center"
+                }
+            }
+    elif tipo == "btn_cedno":
+            data={
+                "messaging_product": "whatsapp",
+                "recipient_type": "individual",
+                "to": number,
+                "type": "text",
+                "text": {
+                    "preview_url": False,
+                    "body": "🚀 Hola Bienvenido!!, Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. Información de Citas. ❔\n2️⃣. Ubicación Sedes. 📍\n3️⃣. Horario de Atención. 📄\n4️⃣. Regresar al Menú. 🕜"
+                }
+            }
+
+    ## Convertir a el diccionario en formato json
+    data = json.dumps(data)        
+    Connect_META(data)
 
 #### Conexion Render/META
 ## Convertir a el diccionario en formato json
@@ -295,10 +361,20 @@ def Connect_META(data):
         connection.request("POST","/v21.0/489807960875135/messages", data, headers)
         response = connection.getresponse()
         print(response.status, response.reason)
+        datospac=""
+        datoscitas=""
     except Exception as e:
         agregar_mensajes_log(json.dumps(e))
     finally:
         connection.close()
+
+
+## Ejecucion en Entorno Virtual
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+
 
 ## Conexion a Web API
 ##def conectar_mysql(nocedula):
@@ -314,8 +390,3 @@ def Connect_META(data):
     # cursor.execute(sql)
 
     # results = cursor.fetchall()
-
-## Ejecucion en Entorno Virtual
-if __name__ == '__main__':
-    app.run(debug=True)
-
