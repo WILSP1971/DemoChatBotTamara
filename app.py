@@ -97,14 +97,17 @@ def recibir_mensajes(req):
                     tipo_interactivo = messages["interactive"]["type"]
 
                     if (tipo_interactivo == "button_reply") or (tipo_interactivo == "reply"):
-                        text = messages["interactive"]["button_reply"]["id"]
-                        notelefono = messages["from"]
+                       notelefono = messages["from"]
+                       if (tipo_interactivo == "button_reply"):
+                           text = messages["interactive"]["button_reply"]["id"]
+                       elif (tipo_interactivo == "reply"):
+                            text = messages["interactive"]["reply"]["id"]
 
-                        if ("btn_cedsi" in text) or ("btn_cedno" in text) :
-                            noidentificacion = messages["interactive"]["button_reply"]["id"]["description"]
-                            mostrar_citas(noidentificacion,notelefono,text)
-                        else:
-                            enviar_mensaje_whatapps(text,notelefono)
+                       if ("btn_cedsi" in text) or ("btn_cedno" in text) :
+                          noidentificacion = messages["interactive"]["reply"]["id"]
+                          mostrar_citas(noidentificacion,notelefono,text)
+                       else:
+                          enviar_mensaje_whatapps(text,notelefono)
                     
                     elif tipo_interactivo == "list_reply":
                         text = messages["interactive"]["list_reply"]["id"]
