@@ -238,7 +238,7 @@ def traer_datoscedula(nocedula,number):
             numero = item["$id"]
             if numero == "1":
                 datospac = item["Paciente"]
-                break
+                #break
 
         data = {
             "messaging_product": "whatsapp",
@@ -256,16 +256,14 @@ def traer_datoscedula(nocedula,number):
                             "type": "reply",
                             "reply": {
                                 "id": "btn_cedsi",
-                                "title": "SI",
-                                "description": nocedula
+                                "title": "SI"
                             }
                         },
                         {
                             "type": "reply",
                             "reply": {
                                 "id": "btn_cedno",
-                                "title": "NO",
-                                "description": nocedula
+                                "title": "NO"
                             }
                         }
                     ]
