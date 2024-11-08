@@ -222,13 +222,7 @@ def traer_datoscedula(nocedula,number):
     params = {"CodigoEmp": "C30", "criterio": nocedula}
     responget = requests.get(api_url, params=params)
     arraydata = responget.json()
-    for item in arraydata:
-        numero = item["$id"]
-        if numero == "1":
-            datospac = item["Paciente"]
-            break
- 
-    if datospac == []:
+    if arraydata == []:
         data={
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
@@ -240,6 +234,12 @@ def traer_datoscedula(nocedula,number):
             }
         }
     else:
+        for item in arraydata:
+            numero = item["$id"]
+            if numero == "1":
+                datospac = item["Paciente"]
+                break
+
         data = {
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
