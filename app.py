@@ -278,7 +278,7 @@ def traer_datoscedula(nocedula,number):
 def mostrar_citas(nocedula,number,tipo):
     if tipo == "btn_cedsi":
         api_url = "https://appsintranet.grupocampbell.com/ApiCampbell/api/CitasProgramadas"
-        params = {"CodigoEmp": "C30", "criterio": nocedula}
+        params = {"CodigoEmp": "C30", "criterio": "1047222424"}
         responget = requests.get(api_url, params=params)
         arraydata = responget.json()
 
