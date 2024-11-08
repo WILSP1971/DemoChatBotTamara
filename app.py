@@ -226,8 +226,20 @@ def traer_datoscedula(nocedula,number):
         numero = item["$id"]
         if numero == "1":
             datospac = item["Paciente"]
-        #break
-    if datospac != "":
+            break
+ 
+    if datospac == []:
+        data={
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": number,
+            "type": "text",
+            "text": {
+                "preview_url": False,
+                "body": "Pacientes No Registrado, Verifique el No de Identificacion..."
+            }
+        }
+    else:
         data = {
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
@@ -258,75 +270,29 @@ def traer_datoscedula(nocedula,number):
                 }
             }
         }
-    elif datospac == "":
-        data={
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": number,
-            "type": "text",
-            "text": {
-                "preview_url": False,
-                "body": "Pacientes No Registrado, Verifique el No de Identificacion..."
-            }
-        }
-
     ## Convertir a el diccionario en formato json
     data = json.dumps(data)        
     Connect_META(data)
 
 ## Funcion Paciente Confirmado Mostrar Citas
 def mostrar_citas(nocedula,number,tipo):
-    if tipo == "btn_cedsi":
+    # Campos de Informacion en Citas Programadas
+    Fecha_Cita=""
+    Hora_Cita=""
+    CodServicio=""
+    DeControl = ""
+    Cita_Control=""
+    Observacion_Cita=""
+    Medico = ""
+
+    if "btn_cedsi" in tipo:
         api_url = "https://appsintranet.grupocampbell.com/ApiCampbell/api/CitasProgramadas"
         params = {"CodigoEmp": "C30", "criterio": "1047222424"}
         responget = requests.get(api_url, params=params)
         arraydata = responget.json()
 
-        # Campos de Informacion en Citas Programadas
-        Fecha_Cita=""
-        Hora_Cita=""
-        CodServicio=""
-        DeControl = ""
-        Cita_Control=""
-        Observacion_Cita=""
-        Medico = ""
-
-        for item in arraydata:
-            numero = item["$id"]
-            if numero == "1":
-                datoscitas = item["CodServicio"]
-                if datoscitas == "CE":
-                    CodServicio="Consulta Externa"
-                else:
-                    CodServicio = "Especialidad"
-
-                ##  variables de campos bd    
-                Fecha_Cita = item["Fecha"]
-                Hora_Cita = item["Hora"]
-                DeControl = item["citaControl"]
-                if DeControl=="S":
-                    Cita_Control="Cita De Control"
-                else:
-                    Cita_Control == "Primera Vez"
-                Observacion_Cita = item["Observacion"]
-                Medico = item["Medico"]
-                nombre_paciente = item["Paciente"]
-                noidentificacion = item["NoIdentificacion"]
-                break
-        if datoscitas != "":
-            data={
-                "messaging_product": "whatsapp",
-                "recipient_type": "individual",
-                "to": number,
-                "type": "text",
-                "text": {
-                    "preview_url": False,
-                    "body": "Es correcto el json" 
-                    #"body": " 0️⃣. Cita en: " + CodServicio +"\n 1️⃣. Fecha: " + Fecha_Cita + "\n 2️⃣. Hora Cita: " + Hora_Cita + "\n 3️⃣. Tipo Cita: " + Cita_Control +"\n 4️⃣. Observacion: " + Observacion_Cita + " \n 5️⃣. Medico de Atencion: " + Medico + "" 
-               }
-            }
-        elif datoscitas == "":
-            data={
+        if arraydata == []:
+             data={
                 "messaging_product": "whatsapp",
                 "recipient_type": "individual",
                 "to": number,
@@ -336,7 +302,30 @@ def mostrar_citas(nocedula,number,tipo):
                     "body": "Pacientes No Registra Citas Programadas... Favor Comunicarse al Call Center"
                 }
             }
-    elif tipo == "btn_cedno":
+        else:
+            for item in arraydata:
+                numero = item["$id"]
+                if numero == "1":
+                    datoscitas = item["CodServicio"]
+                    if datoscitas == "CE":
+                        CodServicio="Consulta Externa"
+                    else:
+                        CodServicio = "Especialidad"
+
+                    ##  variables de campos bd    
+                    Fecha_Cita = item["Fecha"]
+                    Hora_Cita = item["Hora"]
+                    DeControl = item["citaControl"]
+                    if DeControl=="S":
+                        Cita_Control="Cita De Control"
+                    else:
+                        Cita_Control == "Primera Vez"
+                    Observacion_Cita = item["Observacion"]
+                    Medico = item["Medico"]
+                    nombre_paciente = item["Paciente"]
+                    noidentificacion = item["NoIdentificacion"]
+                    break
+
             data={
                 "messaging_product": "whatsapp",
                 "recipient_type": "individual",
@@ -344,9 +333,22 @@ def mostrar_citas(nocedula,number,tipo):
                 "type": "text",
                 "text": {
                     "preview_url": False,
-                    "body": "🚀 Hola Bienvenido!!, Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. Información de Citas. ❔\n2️⃣. Ubicación Sedes. 📍\n3️⃣. Horario de Atención. 📄\n4️⃣. Regresar al Menú. 🕜"
+                    "body": "Es correcto el json" 
+                    #"body": " 0️⃣. Cita en: " + CodServicio +"\n 1️⃣. Fecha: " + Fecha_Cita + "\n 2️⃣. Hora Cita: " + Hora_Cita + "\n 3️⃣. Tipo Cita: " + Cita_Control +"\n 4️⃣. Observacion: " + Observacion_Cita + " \n 5️⃣. Medico de Atencion: " + Medico + "" 
                 }
             }
+
+    elif "btn_cedno" in tipo:
+        data={
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": number,
+            "type": "text",
+            "text": {
+                "preview_url": False,
+                "body": "🚀 Hola Bienvenido!!, Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. Información de Citas. ❔\n2️⃣. Ubicación Sedes. 📍\n3️⃣. Horario de Atención. 📄\n4️⃣. Regresar al Menú. 🕜"
+            }
+        }
 
     ## Convertir a el diccionario en formato json
     data = json.dumps(data)        
