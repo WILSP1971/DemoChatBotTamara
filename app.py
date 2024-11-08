@@ -366,7 +366,7 @@ def Connect_META(data):
     ## Conexion META
     headers = {
         "Content-Type" : "application/json",
-        "Authorization" : "Bearer EAAFojfaX74gBOZBGZAHjiQZCjwz8gVVZBLrJOtgRA5OodZAJEJA7sQjFIXB6qk2lw4GHr8YtliUaOroEu5nwwrq4vCVD7jP8aiRlmC9ni0xfCRAH5ziXQz6gkzZC7i81aD0xNJ0U99TBrTVQcCxmJj5ZApvZAtPwj0ywz9gMhIXoil1OZAS3t2QWhPP2FsHr8u4GO5IDpmaY4AZBb98JOpvEJHrAnO"
+        "Authorization" : "Bearer EAAFojfaX74gBO8aRkOVBDbeW5P6Ja7KeAjpiEWJOm4CPfMqc2ZAul9SpTzvxxCuZB5AfpR7EeMZA7pQ7toKqjBRVPkhLTg4TejEJlHBfg6wTvmo41yLJrqNJDZBVbEwo3IptbVQ7mTahIBP2NuisQBTB5bWRxkArZCKn9wwcwn6nvzA3KJfbk9ZBqNpZBynxZCZBoJufFz7M2mHntcfpRV0m44FgZD"
     }
     connection = http.client.HTTPSConnection("graph.facebook.com")
 
