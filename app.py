@@ -104,7 +104,7 @@ def recibir_mensajes(req):
                             text = messages["interactive"]["reply"]["id"]
 
                        if ("btn_cedsi" in text) or ("btn_cedno" in text) :
-                          noidentificacion = messages["interactive"]["reply"]["id"]
+                          noidentificacion = messages["interactive"]["footer"]["text"]
                           mostrar_citas(noidentificacion,notelefono,text)
                        else:
                           enviar_mensaje_whatapps(text,notelefono)
@@ -253,6 +253,9 @@ def traer_datoscedula(nocedula,number):
                 "body": {
                     "text": "Pacientes es: " + datospac + ", Favor Confirme (Si/No)"
                 },
+                "footer": {
+                    "text": nocedula
+                },
                 "action": {
                     "buttons": [
                         {
@@ -290,7 +293,7 @@ def mostrar_citas(nocedula,number,tipo):
 
     if "btn_cedsi" in tipo:
         api_url = "https://appsintranet.grupocampbell.com/ApiCampbell/api/CitasProgramadas"
-        params = {"CodigoEmp": "C30", "criterio": "1047222424"}
+        params = {"CodigoEmp": "C30", "criterio": nocedula}
         responget = requests.get(api_url, params=params)
         arraydata = responget.json()
 
@@ -326,7 +329,7 @@ def mostrar_citas(nocedula,number,tipo):
                     Observacion_Cita = item["Observacion"]
                     Medico = item["Medico"]
                     nombre_paciente = item["Paciente"]
-                    noidentificacion = item["NoIdentificacion"]
+                    #noidentificacion = item["NoIdentificacion"]
                     break
 
             data={
@@ -336,7 +339,7 @@ def mostrar_citas(nocedula,number,tipo):
                 "type": "text",
                 "text": {
                     "preview_url": False,
-                    "body": "Es correcto el json" 
+                    "body": "Es correcto el json" + nombre_paciente
                     #"body": " 0️⃣. Cita en: " + CodServicio +"\n 1️⃣. Fecha: " + Fecha_Cita + "\n 2️⃣. Hora Cita: " + Hora_Cita + "\n 3️⃣. Tipo Cita: " + Cita_Control +"\n 4️⃣. Observacion: " + Observacion_Cita + " \n 5️⃣. Medico de Atencion: " + Medico + "" 
                 }
             }
